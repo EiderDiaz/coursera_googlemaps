@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "597241952263",
+    "firebase_url": "https://summer-beacon-194023.firebaseio.com",
+    "project_id": "summer-beacon-194023",
+    "storage_bucket": "summer-beacon-194023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597241952263:android:5f67b0e3e86bb7b7",
+        "android_client_info": {
+          "package_name": "com.example.eider.coursera_googlemaps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597241952263-3ngc27e38e8saj33626vt7f4nmq7llej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eider.coursera_googlemaps",
+            "certificate_hash": "848d76ac1d3b01e7f0e9cf3344e95f4d7d3028ab"
+          }
+        },
+        {
+          "client_id": "597241952263-g3ejk9a1khjh6ddb32q6s8q1kjh3kke0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByPox3EOFaBb1FtdtdGbTQVPefsimWII0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597241952263-g3ejk9a1khjh6ddb32q6s8q1kjh3kke0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

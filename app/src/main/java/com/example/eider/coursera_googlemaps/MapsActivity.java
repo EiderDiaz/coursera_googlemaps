@@ -1,19 +1,30 @@
 package com.example.eider.coursera_googlemaps;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.eider.coursera_googlemaps.RestApi.EndPoints;
+import com.example.eider.coursera_googlemaps.RestApi.RestAPIAdapter;
+import com.example.eider.coursera_googlemaps.RestApi.UsuarioResponce;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,6 +32,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -37,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        lanzarNotificacion();
 
         if (getIntent().getExtras().getString("playa") != null){
          lugar  = getIntent().getExtras().getString("playa");
@@ -102,5 +119,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions()
                 .position(place).title("Marker in place")
                 .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(resourseDeImagen))));
+    }
+
+
+    // TODO: 02/02/2018 lanzar notificacion
+    public void lanzarNotificacion(){
+        String token = FirebaseInstanceId.getInstance().getToken();
+        enviarTokenRegistro(token);
+    }
+
+    private void enviarTokenRegistro(String token) {
+        Log.d("FIREBASE_TOKEN",token);
+        RestAPIAdapter restAPIAdapter = new RestAPIAdapter();
+        EndPoints endPoints = restAPIAdapter.establecerConexionRestAPI();
+        Call<UsuarioResponce> usuarioResponceCall = endPoints.registarTokenId(token);
+
+        usuarioResponceCall.enqueue(new Callback<UsuarioResponce>() {
+            @Override
+            public void onResponse(Call<UsuarioResponce> call, Response<UsuarioResponce> response) {
+                UsuarioResponce usuarioResponce = response.body();
+                Toast.makeText(MapsActivity.this, "id :"+usuarioResponce.getId()+"\ntoken: "+usuarioResponce.getToken(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<UsuarioResponce> call, Throwable t) {
+
+            }
+        });
+
     }
 }
